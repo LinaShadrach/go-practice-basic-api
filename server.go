@@ -7,8 +7,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"reflect"
 	"strconv"
 	"os"
+	"net/url"
 
 	_ "github.com/lib/pq"
 )
@@ -33,7 +35,7 @@ func main() {
 	}
 	config := loadConfig(os.Args[1])
 	log.Print("Connecting to DB")
-	db, err := sql.Open("postgres", config.DBURL)
+	db, err := sql.Open("postgres", config.DBCONNSTR)
 	if err != nil {
 		log.Fatalf("Failed to connect to the DB: %s", err)
 	}
@@ -43,10 +45,10 @@ func main() {
 	log.Print("Connected to the database")
 	dbconn = db
 
-	log.Printf("Starting to serve traffic on port %d", config.Port)
+	log.Printf("Starting to serve traffic on port %d", config.PORT)
 	http.HandleFunc("/count", handle)
 
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", config.Port), nil); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", config.PORT), nil); err != nil {
 		log.Fatalf("Error while serving traffic: %s", err)
 	}
 	log.Print("Server shutdown")
@@ -170,7 +172,7 @@ func loadConfig(cfgFile string) *configuration {
 		log.Fatalf("Failed to unmarshal configuration file: %s", err)
 	}
 
-	if config.Port <= 0 {
+	if config.PORT <= 0 {
 		log.Fatal("The port must be larger than 0")
 	}
 
