@@ -16,7 +16,7 @@ import (
 var dbconn *sql.DB
 
 type configuration struct {
-	Port  int
+	PORT  int `json:"port"`
 	DBCONNSTR string `json:"db_conn_str"`
 }
 
@@ -44,10 +44,10 @@ func main() {
 	log.Print("Connected to the database")
 	dbconn = db
 
-	log.Printf("Starting to serve traffic on port %d", config.Port)
+	log.Printf("Starting to serve traffic on port %d", config.PORT)
 	http.HandleFunc("/count", handle)
 
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", config.Port), nil); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", config.PORT), nil); err != nil {
 		log.Fatalf("Error while serving traffic: %s", err)
 	}
 	log.Print("Server shutdown")
@@ -150,7 +150,7 @@ func loadConfig(cfgFile string) *configuration {
 		log.Fatalf("Failed to unmarshal configuration file: %s", err)
 	}
 
-	if config.Port <= 0 {
+	if config.PORT <= 0 {
 		log.Fatal("The port must be larger than 0")
 	}
 
