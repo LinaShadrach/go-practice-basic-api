@@ -63,34 +63,43 @@ func handle(w http.ResponseWriter, r *http.Request) {
 func handleCountRequest(w http.ResponseWriter, r *http.Request) {
 	var err error
 	var rows *sql.Rows
-	params := r.URL.Query()
-
-	if len(params) > 1 {
-		writeResponse(w, http.StatusBadRequest, fmt.Errorf("number of parameters: %d", len(params)), "Invalid number of parameters")
-	} else {
-		key, value := "", ""
-		if len(params) > 0 {
-			var values []string
-			key, values = getParam(params, w)
-			var isValid bool
-			value, isValid = isValidParam(key, values, w)
-			if !isValid {
-				return
-			}
-		}
-		rows, err = queryDB(key, value)
+	key, value, paramsAreValid := processParams(w, r.URL.Query());
+	if !paramsAreValid {
+		return
 	}
+	rows, err = queryDB(key, value)
 	if err != nil {
 		writeResponse(w, http.StatusInternalServerError, err, "Failed to query the DB: ")
 		return
 	}
 	defer rows.Close()
-	total, errorInProcessCountQueryResults := processCountQueryResults(rows, w)
-	if hadErrorInRow(w, rows) || errorInProcessCountQueryResults {
+	total, errorInProcessCountQueryResults := processCountQueryResults(rows, w);
+	if errorInProcessCountQueryResults {
+		return
+	}
+	if err := rows.Err(); err != nil {
+		writeResponse(w, http.StatusInternalServerError, err, "Error while interacting with the DB:")
 		return
 	}
 	fmt.Fprintf(w, "%d", total)
+}
 
+func processParams(w http.ResponseWriter, params url.Values) (string, string, bool){
+	allParamsValid := true
+	key, value := "", ""
+	if len(params) > 1 {
+		writeResponse(w, http.StatusBadRequest, fmt.Errorf("number of parameters: %d", len(params)), "Invalid number of parameters")
+		allParamsValid = false
+	} else {
+		if len(params) > 0 {
+			var values []string
+			var isValid bool
+			key, values = getParam(params, w)
+			value, isValid = isValidParam(key, values, w)
+			allParamsValid = isValid && allParamsValid
+		}
+	}
+	return key, value, allParamsValid
 }
 
 func queryDB(key string, value string) (*sql.Rows, error) {
@@ -151,14 +160,6 @@ func writeResponse(w http.ResponseWriter, statusCode int, err error, message str
 	w.WriteHeader(statusCode)
 }
 
-func hadErrorInRow(w http.ResponseWriter, rows *sql.Rows) bool {
-	if err := rows.Err(); err != nil {
-		writeResponse(w, http.StatusInternalServerError, err, "Error while interacting with the DB:")
-		return true
-	}
-	return false
-}
-
 func loadConfig(cfgFile string) *configuration {
 	log.Printf("Loading configuration from: %s", cfgFile)
 
@@ -178,4 +179,3 @@ func loadConfig(cfgFile string) *configuration {
 
 	return config
 }
-
