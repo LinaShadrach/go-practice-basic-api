@@ -99,7 +99,7 @@ func handleIDRequest(w http.ResponseWriter, r *http.Request, idstr string) {
 	}
 
 	// request the count for that entry
-	rows, err := dbconn.Query("select count from viewers where name = $1", id)
+	rows, err := dbconn.Query("select count from viewers where id = $1", id)
 	if err != nil {
 		log.Printf("Failed to query the DB: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
