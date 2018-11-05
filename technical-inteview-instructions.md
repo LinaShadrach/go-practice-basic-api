@@ -11,7 +11,7 @@ Some information about the instance:
 - The user-facing service should be listening on port 80
 - The web server
   - is in go
-  - the source code lives in `/opt/app``s``/sillyserver/code/`
+  - the source code lives in `/opt/apps/sillyserver/code/`
   - is installed as `/usr/local/bin/server`
   - GET requests to `/count` will return the total number of views
   - GET requests to `/count?id=<id>` return the total number of views for that one user
