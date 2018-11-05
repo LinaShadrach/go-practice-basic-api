@@ -32,17 +32,17 @@ _The process outlined below is specific to running postgres on linux_
 
 * created _config.json_, added the port and db connection string
     * replaced temporary hard-coded data (see above) with input from config file
-    * switched to from using url to using key-value pair for conn string because it's easier to read
-    * switch config.Port to config.PORT for consistency
-* ran _server.go_, queried `/count`, got expected value
+    * switched config.Port to config.PORT for consistency
+    * switched config.DBURL to config.DBCONNSTR to be more general
+* ran _server.go_ and passed in _config.json_, queried `/count`, got expected value
 
 #### Fix Makefile
 
-* opened Makefile, noticed tasks were not in sequence
-* switched order of tasks (deploy > build)
+* opened Makefile, noticed commands were not in sequence
+* switched order of commands (moved `deploy`  above `build`)
 * changed `go build` output to _src/server_ in build task, change source for _server_ in deploy task
 * added command for copying config file
-* run make
+* run `> make`
 
 ## Part 2: Bug Fix
 
