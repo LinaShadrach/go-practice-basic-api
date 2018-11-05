@@ -1,8 +1,8 @@
 # Netlify Technical Interview Project
 
-A project completed for the Netlify interview process. The goal was to get running, fix, and improve a simple server written in Go that depends on a Postgres database. The original program was provided by Netlify. Click [here](https://gitlab.com/linashadrach/server/blob/master/technical-inteview-instructions.md) to view the full instructions. 
-
 ##### _Candidate: Lina Shadrach_
+
+This work was done for the Netlify interview process. The goal was to get running, fix, and improve a simple server written in Go that depends on a Postgres database. The [original program](https://gitlab.com/linashadrach/server/tree/7e1c1c69ea9ad335b1c77ee9871a476630c298a0) was provided by Netlify. Click [here](https://gitlab.com/linashadrach/server/blob/master/technical-inteview-instructions.md) to view the full instructions. 
 
 ### What it does
 
