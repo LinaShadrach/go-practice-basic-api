@@ -59,6 +59,8 @@ func handle(w http.ResponseWriter, r *http.Request) {
 
 	if id := r.URL.Query().Get("id"); id != "" {
 		handleIDRequest(w, r, id)
+	} else if name := r.URL.Query().Get("name"); name != "" {
+		handleNameRequest(w, r, name)
 	} else {
 		handleCountRequest(w, r)
 	}
@@ -100,6 +102,39 @@ func handleIDRequest(w http.ResponseWriter, r *http.Request, idstr string) {
 
 	// request the count for that entry
 	rows, err := dbconn.Query("select count from viewers where id = $1", id)
+	if err != nil {
+		log.Printf("Failed to query the DB: %s", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	// check if we found anything
+	if rows.Next() {
+		var count int
+		if err := rows.Scan(&count); err != nil {
+			log.Printf("Error while iterating over rows: %s", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		if hadError(w, rows) {
+			return
+		}
+
+		fmt.Fprintf(w, "%d", count)
+		return
+	}
+	if hadError(w, rows) {
+		return
+	}
+	w.WriteHeader(http.StatusNotFound)
+}
+
+func handleNameRequest(w http.ResponseWriter, r *http.Request, namestr string) {
+	// TODO:validate the users input
+
+	// request the count for that entry
+	rows, err := dbconn.Query("select count from viewers where name = $1", namestr)
 	if err != nil {
 		log.Printf("Failed to query the DB: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
