@@ -17,7 +17,7 @@ var dbconn *sql.DB
 
 type configuration struct {
 	Port  int
-	DBURL string `json:"db_url"`
+	DBCONNSTR string `json:"db_conn_str"`
 }
 
 type viewer struct {
@@ -33,7 +33,8 @@ func main() {
 	}
 	config := loadConfig(os.Args[1])
 	log.Print("Connecting to DB")
-	db, err := sql.Open("postgres", config.DBURL)
+
+	db, err := sql.Open("postgres", config.DBCONNSTR)
 	if err != nil {
 		log.Fatalf("Failed to connect to the DB: %s", err)
 	}
@@ -145,7 +146,6 @@ func loadConfig(cfgFile string) *configuration {
 	}
 
 	config := new(configuration)
-	log.Printf(config.DBURL)
 	if err := json.Unmarshal(bs, config); err != nil {
 		log.Fatalf("Failed to unmarshal configuration file: %s", err)
 	}
