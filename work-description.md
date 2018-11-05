@@ -6,6 +6,8 @@ _Below is a description of the work I did_
 
 #### Get postgres running
 
+_The process outlined below is specific to running postgres on linux_
+
 * used `service postgresql start` to start db server
 * used `service postgresql status` to check status, saw it was 'active'
 * used `lsof -nP | grep LISTEN` to check which port it was listening at, saw no entry for 'postgres'
