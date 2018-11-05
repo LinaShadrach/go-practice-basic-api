@@ -2,7 +2,9 @@
 
 ##### _Candidate: Lina Shadrach_
 
-This work was done for the Netlify interview process. The goal was to get running, fix, and improve a simple server written in Go that depends on a Postgres database. The [original program](https://gitlab.com/linashadrach/server/tree/7e1c1c69ea9ad335b1c77ee9871a476630c298a0) was provided by Netlify. Click [here](https://gitlab.com/linashadrach/server/blob/master/technical-inteview-instructions.md) to view the full instructions. 
+This work was done for the Netlify interview process. The goal was to get running, fix, and improve a simple server written in Go that depends on a Postgres database. The [original program](https://gitlab.com/linashadrach/server/tree/7e1c1c69ea9ad335b1c77ee9871a476630c298a0) was provided by Netlify. 
+* Click [here](https://gitlab.com/linashadrach/server/blob/master/technical-inteview-instructions.md) to view the full instructions.
+* Click [here](https://gitlab.com/linashadrach/server/blob/master/work-description.md) to see a description of the work completed
 
 ### What it does
 
@@ -31,9 +33,9 @@ This work was done for the Netlify interview process. The goal was to get runnin
     ```
 
     * optional: use the following to add sample data:
-    ```
-    insert into viewers (id, name, count) values (2, 'ryan', 10),(3, 'aaron', 5),(4, 'sue', 200),(5, 'amanda', 50),(6, 'emily', 1),(7, 'sundance', 123);
-    ```
+        ```
+        insert into viewers (id, name, count) values (2, 'ryan', 10),(3, 'aaron', 5),(4, 'sue', 200),(5, 'amanda', 50),(6, 'emily', 1),(7, 'sundance', 123);
+        ```
 
 #### _config.json_ Setup
 
