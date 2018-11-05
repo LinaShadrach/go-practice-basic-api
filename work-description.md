@@ -54,3 +54,5 @@ _The process outlined below is specific to running postgres on linux_
 * add function `handleNameRequest()` to process requests to `/count?name=`
 * add conditional to `main()` to invoke `handleNameRequest()` when name parameter supplied to `/count` endpoint
 * ran _server.go_, queried `/count?name=sundance`, got expected value
+
+_NOTE: I've started a branch called refactor where I've played around with making the code more resusable. I've never programmed in Go, so I took the opportunity to get to know the language_
