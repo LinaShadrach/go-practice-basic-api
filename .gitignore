@@ -2,6 +2,9 @@
 # Config Files
 config.json
 
+# Build output
+/src
+
 # Common files (sourced from https://github.com/github/gitignore/blob/master/Go.gitignore)
 # Binaries for programs and plugins
 *.exe
