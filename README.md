@@ -50,10 +50,22 @@ Check out this documentation on [the Go package pq](https://godoc.org/github.com
 
 #### Makefile
 
-* run `> make` in top level of project
-    * program will be installed in `/usr/local/bin/`
-    * use `> /usr/local/bin/server config.json` to run program 
+* Run `> make` in top level of project
+    * Program will be installed in `/usr/local/bin/`
 
+
+### Run the Program
+
+* In the directory containing sever.go, use `> go run server.go config.json` to run the project
+* After running `> make`, the project can be run from installed location:
+    * Use `> /usr/local/bin/server config.json`
+* Make HTTP requests to `/count` using the port number supplied in _config.json_
+
+### Things to add
+
+* Test coverage.
+* Logging file
+* Custom Error handler
 
 # License
 
