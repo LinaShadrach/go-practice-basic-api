@@ -38,9 +38,9 @@ _The process outlined below is specific to running postgres on linux_
 
 #### Fix Makefile
 
-* opened Makefile, noticed commands were not in sequence
-* switched order of commands (moved `deploy`  above `build`)
-* changed `go build` output to _src/server_ in build task, change source for _server_ in deploy task
+* opened Makefile, noticed commands were in the wrong order so `deploy` command was not running when `> make` was run
+* switched order of commands (moved `deploy` above `build`sers don’t have to run deploy command separately
+* changed `go build` output to _src/server_ in build task, change source for _server_ in deploy task to same
 * added command for copying config file
 * run `> make`
 
@@ -55,4 +55,4 @@ _The process outlined below is specific to running postgres on linux_
 * add conditional to `main()` to invoke `handleNameRequest()` when name parameter supplied to `/count` endpoint
 * ran _server.go_, queried `/count?name=sundance`, got expected value
 
-_NOTE: I've started a branch called refactor where I've played around with making the code more resusable. I've never programmed in Go, so I took the opportunity to get to know the language_
+_NOTE: The work above was completed on the master branch. I've started a branch called refactor where I've played around with making the code more resusable. I've never programmed in Go, so I took the opportunity to get to know the language_
