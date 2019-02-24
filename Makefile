@@ -1,8 +1,11 @@
 .PHONY:build$
 
-deploy: build src/server config.json
-	mv src/server /usr/local/bin/server
-	cp config.json /usr/local/bin/config.json
+serverConfig=config.json
+installPath=/usr/local/bin
+
+deploy: build src/server $(serverConfig)
+	mv src/server $(installPath)/server
+	cp $(serverConfig) $(installPath)/$(serverConfig)
 
 build: server.go
 	go build -o src/server server.go

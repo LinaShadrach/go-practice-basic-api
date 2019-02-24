@@ -32,17 +32,17 @@ _The process outlined below is specific to running postgres on linux_
 
 * created _config.json_, added the port and db connection string
     * replaced temporary hard-coded data (see above) with input from config file
-    * switched to from using url to using key-value pair for conn string because it's easier to read
-    * switch config.Port to config.PORT for consistency
-* ran _server.go_, queried `/count`, got expected value
+    * switched config.Port to config.PORT for consistency
+    * switched config.DBURL to config.DBCONNSTR to be more general
+* ran _server.go_ and passed in _config.json_, queried `/count`, got expected value
 
 #### Fix Makefile
 
-* opened Makefile, noticed tasks were not in sequence
-* switched order of tasks (deploy > build)
-* changed `go build` output to _src/server_ in build task, change source for _server_ in deploy task
+* opened Makefile, noticed commands were in the wrong order so `deploy` command was not running when `> make` was run
+* switched order of commands (moved `deploy` above `build`sers don’t have to run deploy command separately
+* changed `go build` output to _src/server_ in build task, change source for _server_ in deploy task to same
 * added command for copying config file
-* run make
+* run `> make`
 
 ## Part 2: Bug Fix
 
@@ -54,3 +54,5 @@ _The process outlined below is specific to running postgres on linux_
 * add function `handleNameRequest()` to process requests to `/count?name=`
 * add conditional to `main()` to invoke `handleNameRequest()` when name parameter supplied to `/count` endpoint
 * ran _server.go_, queried `/count?name=sundance`, got expected value
+
+_NOTE: The work above was completed on the master branch. I've started a branch called refactor where I've played around with making the code more resusable. I've never programmed in Go, so I took the opportunity to get to know the language_
