@@ -1,8 +1,6 @@
 # Basic Go API
 
-This work was done to explore the Go language. The goal was to get running, fix, and improve a simple server written in Go that depends on a Postgres database. 
-* Click [here](https://gitlab.com/linashadrach/server/blob/master/technical-inteview-instructions.md) to view the full instructions.
-* Click [here](https://gitlab.com/linashadrach/server/blob/master/work-description.md) to see a description of the work completed
+This work was done to explore the Go language and Postgres. The goal was to create a simple server written in Go that depends on a Postgres database. 
 
 ### What it does
 
